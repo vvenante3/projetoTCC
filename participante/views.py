@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from .models import Participante
 
+# PARTICIPANTE
 def participante(request):
-    return render(request, "index.html")
+    participantes = Participante.objects.all()
+    return render(request, "index.html", {"participantes": participantes})

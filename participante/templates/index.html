@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Participantes</title>
+</head>
+<body>
+    <container>
+        <div>
+            <h2>Participantes</h2>
+
+            <div>
+                <!--  FORM ACTION-->
+            </div>
+
+            <br>
+
+            <div>
+                <table border="1">
+                    <tr>
+                        <th>ID                  </th>
+                        <th>CÓDIGO              </th>
+                        <th>NOME                </th>
+                        <th>SOBRENOME           </th>
+                        <th>DATA DE NASCIMENTO  </th>
+                        <th>SEXO                </th>
+                        <th>IMAGEM              </th>
+                    </tr>
+
+                {% for participante in participante %}
+
+                    <tr>
+                        <th>{{ participante.idParticipante  }}</th>
+                        <th>{{ participante.codigo          }}</th>
+                        <th>{{ participante.nome            }}</th>
+                        <th>{{ participante.sobrenome       }}</th>
+                        <th>{{ participante.dataNascimento  }}</th>
+                        <th>{{participante.sexo             }}</th>
+                        <th>{{participante.imagem           }}</th>
+
+                        <th>
+                            <!-- EDITAR E DELETAR -->
+                        </th>
+
+                {% endfor %}
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </container>
+</body>
+</html>
