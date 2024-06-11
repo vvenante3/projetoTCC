@@ -13,7 +13,7 @@
             <h2>Participantes</h2>
 
             <div>
-                <!--  FORM ACTION-->
+                <!--  FORM ACTION BARRA PESQUISA -->
             </div>
 
             <br>
@@ -30,24 +30,42 @@
                         <th>IMAGEM              </th>
                     </tr>
 
-                {% for participante in participante %}
+                {% for participante in participantes %}
 
                     <tr>
-                        <th>{{ participante.idParticipante  }}</th>
-                        <th>{{ participante.codigo          }}</th>
-                        <th>{{ participante.nome            }}</th>
-                        <th>{{ participante.sobrenome       }}</th>
-                        <th>{{ participante.dataNascimento  }}</th>
-                        <th>{{participante.sexo             }}</th>
-                        <th>{{participante.imagem           }}</th>
+                        <th>{{participante.idParticipante  }}</th>
+                        <th>{{participante.codigo          }}</th>
+                        <th>{{participante.nome            }}</th>
+                        <th>{{participante.sobrenome       }}</th>
+                        <th>{{participante.dataNascimento  }}</th>
+                        <th>{{participante.sexo            }}</th>
+                        <th>{{participante.imagem          }}</th>
 
                         <th>
-                            <!-- EDITAR E DELETAR -->
+                            <a href="{% url 'editar_participante' participante.idParticipante %}">  Editar</a>
+                            <a href="{% url 'deletar_participante' participante.idParticipante %}" onclick="return confirm('Deseja realmente deletar este participante?')"> Deletar</a>
                         </th>
-
                 {% endfor %}
                     </tr>
                 </table>
+            </div>
+
+            <br>
+
+                        <!-- INSERCAO DE DADOS -->
+            <h3>Realizar Cadastro</h3>
+            <div>
+                <form action="{% url 'salvar_participante' %}" method="POST">
+                    {% csrf_token %}
+                    codigo              <input type="text"  name="codigo"         required> <br>
+                    nome                <input type="text"  name="nome"           required> <br>
+                    sobrenome           <input type="text"  name="sobrenome"      required> <br>
+                    dataNascimento      <input type="date"  name="dataNascimento" required> <br>
+                    sexo                <input type="text"  name="sexo"           required> <br>
+                    imagem              <input type="file"  name="imagem"         required> <br><br>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
             </div>
 
         </div>

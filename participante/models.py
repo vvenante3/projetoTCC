@@ -7,7 +7,7 @@ class Participante(models.Model):
     nome            = models.CharField(max_length=30)
     sobrenome       = models.CharField(max_length=30)
     dataNascimento  = models.DateField()
-    sexo            = models.CharField(max_length=1)
+    sexo            = models.CharField(max_length=1, choices=[('M', 'Masculino'), ('F', 'Feminino')])
     imagem          = models.ImageField()
 
     def __str__(self):
