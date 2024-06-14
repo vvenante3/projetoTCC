@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-# Create your views here.
+# LOGIN
+def pagina_login(request):
+    return render(request, 'login/login.html')

@@ -4,7 +4,7 @@ from .models import Participante
 # PARTICIPANTE
 def participante(request):
     participantes = Participante.objects.all()
-    return render(request, "index.html", {"participantes": participantes})
+    return render(request, "participante/index.html", {"participantes": participantes})
 
 def salvar_participante(request):
     codigo          = request.POST['codigo']
@@ -22,7 +22,7 @@ def salvar_participante(request):
 
 def editar_participante(request, id):
     participante = Participante.objects.get(idParticipante=id)
-    return render(request, 'atualizar_participante.html', {'participante': participante})
+    return render(request, 'participante/atualizar_participante.html', {'participante': participante})
 
 def atualizar_participante(request, id):
     codigo          = request.POST.get('codigo')
