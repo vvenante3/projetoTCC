@@ -11,19 +11,22 @@
     <container>
         <div>
             <div>
-                <h1> Login </h1>
+                <h1>Cadastrar Usuário </h1>
             </div>
 
             <div>
-                <form action="{% url 'pagina_login' %}" method="POST">
+                <form action="{% url 'pagina_cadastro' %}" method="POST">
                     {% csrf_token %}
                     <input type="text" placeholder="Usuário" name="usuario" required>
+                    <br>
+                    <br>
+                    <input type="email" placeholder="Email" name="email"    required>
                     <br>
                     <br>
                     <input type="password" placeholder="Senha" name="senha" required>
                     <br>
                     <br>
-                    <input type="submit" value="Logar">
+                    <input type="submit" value="Cadastrar">
                 </form>
             </div>
         </div>
