@@ -1,10 +1,18 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Participante
+from django.contrib.auth.decorators import login_required
 
 # PARTICIPANTE
+@login_required(login_url='pagina_login')
 def participante(request):
-    participantes = Participante.objects.all()
-    return render(request, "index.html", {"participantes": participantes})
+    # Verifica o login de Autenticação
+    if request.user.is_authenticated:
+
+        # Traz os dados que estão cadastrados em nosso Db
+        participantes = Participante.objects.all()
+        return render(request, "participante/index.html", {"participantes": participantes})
+    return HttpResponse('Você precisa estar logado.')
 
 def salvar_participante(request):
     codigo          = request.POST['codigo']
@@ -22,7 +30,7 @@ def salvar_participante(request):
 
 def editar_participante(request, id):
     participante = Participante.objects.get(idParticipante=id)
-    return render(request, 'atualizar_participante.html', {'participante': participante})
+    return render(request, 'participante/atualizar_participante.html', {'participante': participante})
 
 def atualizar_participante(request, id):
     codigo          = request.POST.get('codigo')

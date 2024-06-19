@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editar Participante</title>
+</head>
+<body>
+
+<!--  AMOSTRA DE DADOS -->
+<container>
+    <div>
+        <div>
+            <h2>Editar Participante </h2>
+        </div>
+
+        <div>
+            <table border="1">
+                <tr>
+                    <th>ID                  </th>
+                    <th>CÓDIGO              </th>
+                    <th>NOME                </th>
+                    <th>SOBRENOME           </th>
+                    <th>DATA DE NASCIMENTO  </th>
+                    <th>SEXO                </th>
+                    <th>IMAGEM              </th>
+                </tr>
+                <tr>
+                    <th>{{participante.idParticipante  }}</th>
+                    <th>{{participante.codigo          }}</th>
+                    <th>{{participante.nome            }}</th>
+                    <th>{{participante.sobrenome       }}</th>
+                    <th>{{participante.dataNascimento  }}</th>
+                    <th>{{participante.sexo            }}</th>
+                    <th>{{participante.imagem          }}</th>
+                </tr>
+            </table>
+        </div>
+
+<!--     INSERÇÃO DE DADOS-->
+        <div>
+            <h3> Editar </h3>
+        </div>
+
+        <div>
+            <form action="{% url 'atualizar_participante' participante.idParticipante %}" method="POST">
+                {% csrf_token %}
+                codigo              <input type="text"  name="codigo"           value="{{ participante.codigo           }}"   required>
+                <br>
+                <br>
+                nome                <input type="text"  name="nome"             value="{{ participante.nome             }}"   required>
+                <br>
+                <br>
+                sobrenome           <input type="text"  name="sobrenome"        value="{{ participante.sobrenome        }}"   required>
+                <br>
+                <br>
+                dataNascimento      <input type="date"  name="dataNascimento"   value="{{ participante.dataNascimento   }}"   required>
+                <br>
+                <br>
+                sexo                <input type="text"  name="sexo"             value="{{ participante.sexo             }}"   required>
+                <br>
+                <br>
+                imagem              <input type="file"  name="imagem"           value="{{ participante.imagem           }}"   required>
+                <br>
+                <br>
+
+                <button type="submit" onclick="return confirm('Deseja realmente atualizar este participante?')">Atualizar</button>
+            </form>
+        </div>
+
+        <br>
+
+        <div>
+            <!-- BOTÃO VOLTAR -->
+        </div>
+    </div>
+</container>
+</body>
+</html>

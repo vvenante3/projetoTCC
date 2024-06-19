@@ -10,8 +10,9 @@
 <body>
     <container>
         <div>
-            <h2>Participantes</h2>
-
+            <div>
+                <h2> Participantes </h2>
+            </div>
             <div>
                 <!--  FORM ACTION BARRA PESQUISA -->
             </div>
@@ -54,16 +55,31 @@
             <br>
 
                         <!-- INSERCAO DE DADOS -->
-            <h3>Realizar Cadastro</h3>
+            <div>
+                <h3>Realizar Cadastro</h3>
+            </div>
+
             <div>
                 <form action="{% url 'salvar_participante' %}" method="POST">
                     {% csrf_token %}
-                    codigo              <input type="text"  name="codigo"         required> <br>
-                    nome                <input type="text"  name="nome"           required> <br>
-                    sobrenome           <input type="text"  name="sobrenome"      required> <br>
-                    dataNascimento      <input type="date"  name="dataNascimento" required> <br>
-                    sexo                <input type="text"  name="sexo"           required> <br>
-                    imagem              <input type="file"  name="imagem"         required> <br><br>
+                    codigo              <input type="text"  name="codigo"         required>
+                    <br>
+                    <br>
+                    nome                <input type="text"  name="nome"           required>
+                    <br>
+                    <br>
+                    sobrenome           <input type="text"  name="sobrenome"      required>
+                    <br>
+                    <br>
+                    dataNascimento      <input type="date"  name="dataNascimento" required>
+                    <br>
+                    <br>
+                    sexo                <input type="text"  name="sexo"           required>
+                    <br>
+                    <br>
+                    imagem              <input type="file"  name="imagem"         required>
+                    <br>
+                    <br>
 
                     <button type="submit">Cadastrar</button>
                 </form>
