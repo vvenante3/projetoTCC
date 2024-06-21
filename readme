@@ -6,29 +6,26 @@ Link da 2º entrega - Programação III:
 
 
 
-OBJETIVOS PROJETO TCC
+* OBJETIVOS PROJETO TCC *
 
-Prioridades:
+-> Prioridades:
 
-[ ] Criar Testes Unitários CRUD
+[ OK ] Criar Testes Unitários CRUD
 [ OK ] Criar Página que levará o participante para análise da imagem
-[ ] Criar Botões de navegação entre páginas
-[ ] Criar Barra de Busca ---> Criar página da busca
+[ OK ] Criar Botões de navegação entre páginas
+[ X ] Criar Barra de Busca ---> Criar página da busca
 [ ] Aplicar o BootStrap
 
-
-A serem aprimorados / desenvolvidos
-
-[ ] Aprimorar autenticação entre páginas
-[ ] Criar Deslogar autenticação
-[ ] Corrigir Caminho de imagem do participante
-[ ] Criar a análise da imagem
-[ ] Apresentar o Resultado da análise
-[ ] Alinhar navegação entre páginas
-
-
-Realizar futuros ajustes
+-> Realizar futuros ajustes
 [ ] (Pág. Cadastro e Editar) Realizar validação de dados nos campos
 [ ] (Pág. Editar) Puxar data de nascimento do Db
 [ ] (Pág. Editar) Puxar imagem do Db
 
+-> A serem aprimorados / desenvolvidos
+
+[ ] Corrigir Caminho de imagem do participante
+[ ] Aprimorar autenticação entre páginas
+[ ] Criar Deslogar autenticação
+[ ] Criar a análise da imagem - API Request
+[ ] Apresentar o Resultado da análise
+[ ] Alinhar navegação entre páginas

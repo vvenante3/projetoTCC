@@ -45,7 +45,7 @@
                         <th>
                             <a href="{% url 'editar_participante' participante.idParticipante %}">Editar</a>
                             <a href="{% url 'deletar_participante' participante.idParticipante %}" onclick="return confirm('Deseja realmente deletar este participante?')">Deletar</a>
-                            <a href="{% url 'analisar_participante' participante.idParticipante %}"> Analisar</a>
+                            <a href="{% url 'analisar_participante' participante.idParticipante %}">Analisar</a>
                         </th>
                 {% endfor %}
                     </tr>
