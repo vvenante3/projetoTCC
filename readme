@@ -1,8 +1,9 @@
 Acadêmico: Vitor Melech Venante
 RA: 22027092-2
 
-Link da 2º entrega - Programação III:
+--> Link da 2º entrega - Programação III:
 
+--> Link do MVP: https://colab.research.google.com/drive/1zKS9jXEIaI8fbfRZmrUmj6eHJzy1qFH8?usp=sharing
 
 
 
@@ -10,11 +11,14 @@ Link da 2º entrega - Programação III:
 
 -> Prioridades:
 
+[ OK ] Autenticação
 [ OK ] Criar Testes Unitários CRUD
+[ OK ] Criar MVP ( Colab )
 [ OK ] Criar Página que levará o participante para análise da imagem
 [ OK ] Criar Botões de navegação entre páginas
 [ X ] Criar Barra de Busca ---> Criar página da busca
 [ ] Aplicar o BootStrap
+
 
 -> Realizar futuros ajustes
 [ ] (Pág. Cadastro e Editar) Realizar validação de dados nos campos
