@@ -17,13 +17,13 @@ RA: 22027092-2
 [ OK ] Criar Página que levará o participante para análise da imagem
 [ OK ] Criar Botões de navegação entre páginas
 [ X ] Criar Barra de Busca ---> Criar página da busca
-[ ] Aplicar o BootStrap
+[ OK ] Aplicar o BootStrap
 
 
 -> Realizar futuros ajustes
-[ ] (Pág. Cadastro e Editar) Realizar validação de dados nos campos
-[ ] (Pág. Editar) Puxar data de nascimento do Db
-[ ] (Pág. Editar) Puxar imagem do Db
+[ ] (Pág. index & atualizar) Realizar validação de dados nos campos
+[ ] (Pág. Cindex & atualizar & analisar) Puxar data de nascimento do Db
+[ ] (Pág. index & atualizar & analisar) Puxar imagem do Db
 
 -> A serem aprimorados / desenvolvidos
 
