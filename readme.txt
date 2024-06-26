@@ -1,7 +1,7 @@
 Acadêmico: Vitor Melech Venante
 RA: 22027092-2
 
---> Link da 2º entrega - Programação III:
+--> Link da 2º entrega - Programação III: https://youtu.be/jNnaCyu9FmU
 
 --> Link do MVP: https://colab.research.google.com/drive/1zKS9jXEIaI8fbfRZmrUmj6eHJzy1qFH8?usp=sharing
 
