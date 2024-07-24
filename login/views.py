@@ -17,7 +17,7 @@ def pagina_login(request):
         if usuario:
             login(request, usuario)
 
-            return HttpResponse('autenticado.')
+            return HttpResponse('Autenticado.') # DESENVOLVER PÁG. PARA INDEX.HTML
         else:
             return HttpResponse('Email ou Senha inválidos.')
 
