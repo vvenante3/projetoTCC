@@ -15,16 +15,17 @@ def participante(request):
     return HttpResponse('Você precisa estar logado.')
 
 def salvar_participante(request):
-    codigo          = request.POST['codigo']
-    nome            = request.POST['nome']
-    sobrenome       = request.POST['sobrenome']
-    dataNascimento  = request.POST['dataNascimento']
-    sexo            = request.POST['sexo']
-    imagem          = request.POST['imagem']
+    if request.method == "POST":
+        codigo          = request.POST['codigo']
+        nome            = request.POST['nome']
+        sobrenome       = request.POST['sobrenome']
+        dataNascimento  = request.POST['dataNascimento']
+        sexo            = request.POST['sexo']
+        imagem          = request.FILES['imagem']
 
-    # salvar no Db
-    Participante.objects.create(codigo=codigo, nome=nome, sobrenome=sobrenome, dataNascimento=dataNascimento, sexo=sexo, imagem=imagem)
-    participantes = Participante.objects.all()
+        # salvar no Db
+        Participante.objects.create(codigo=codigo, nome=nome, sobrenome=sobrenome, dataNascimento=dataNascimento, sexo=sexo, imagem=imagem)
+        participantes = Participante.objects.all()
 
     return redirect('participante')
 

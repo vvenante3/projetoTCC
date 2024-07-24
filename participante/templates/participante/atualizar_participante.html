@@ -49,13 +49,19 @@
                     <th>IMAGEM              </th>
                 </tr>
                 <tr>
-                    <th>{{participante.idParticipante  }}</th>
-                    <th>{{participante.codigo          }}</th>
-                    <th>{{participante.nome            }}</th>
-                    <th>{{participante.sobrenome       }}</th>
-                    <th>{{participante.dataNascimento  }}</th>
-                    <th>{{participante.sexo            }}</th>
-                    <th>{{participante.imagem          }}</th>
+                    <th>{{participante.idParticipante               }}</th>
+                    <th>{{participante.codigo                       }}</th>
+                    <th>{{participante.nome                         }}</th>
+                    <th>{{participante.sobrenome                    }}</th>
+                    <th>{{participante.dataNascimento|date:'d/m/Y'  }}</th>
+                    <th>{{participante.sexo                         }}</th>
+                        <th>
+                            {% if participante.imagem %}
+                                <img src="{{ participante.imagem.url }}" style="height: 50px">
+                            {% else %}
+                                Sem imagem
+                            {% endif %}
+                        </th>
                 </tr>
             </table>
         </div>
@@ -68,7 +74,7 @@
 
             <br>
 
-            <form action="{% url 'atualizar_participante' participante.idParticipante %}" method="POST">
+            <form action="{% url 'atualizar_participante' participante.idParticipante %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row mb-3">
                     <div class="col-md-4">
@@ -87,7 +93,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="dataNascimento">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" value="{{ participante.dataNascimento }}" required>
+                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" value="{{ participante.dataNascimento|date:'Y-m-d' }}" required>
                     </div>
                     <div class="col-md-6">
                         <label for="sexo">Sexo</label>

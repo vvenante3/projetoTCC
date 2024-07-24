@@ -9,20 +9,13 @@ RA: 22027092-2
 
 * OBJETIVOS PROJETO TCC *
 
--> Prioridades:
-
-[ OK ] Autenticação
-[ OK ] Criar Testes Unitários CRUD
-[ OK ] Criar MVP ( Colab )
-[ OK ] Criar Página que levará o participante para análise da imagem
-[ OK ] Criar Botões de navegação entre páginas
-[ X ] Criar Barra de Busca ---> Criar página da busca
-[ OK ] Aplicar o BootStrap
-
+-> Ajustes pré 2º Semestre
+[ OK ] Desenvolver caminho de imagem no Db - (Participante)
+[ ] Autenticação direcionará direto para a página principal
 
 -> Realizar futuros ajustes
 [ ] (Pág. index & atualizar) Realizar validação de dados nos campos
-[ ] (Pág. Cindex & atualizar & analisar) Puxar data de nascimento do Db
+[ ] (Pág. index & atualizar & analisar) Puxar data de nascimento do Db
 [ ] (Pág. index & atualizar & analisar) Puxar imagem do Db
 
 -> A serem aprimorados / desenvolvidos
