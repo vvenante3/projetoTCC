@@ -10,6 +10,7 @@ RA: 22027092-2
 
 -> Ajustes pré 2º Semestre
 [ ] Autenticação direcionará direto para a página principal
+[ ] Diretório -> corrigir restrição (imagens_participantes)
 
 -> A serem aprimorados / desenvolvidos
 [ ] (Pág. index & atualizar) Realizar validação de dados nos campos
