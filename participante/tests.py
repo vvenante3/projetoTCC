@@ -5,7 +5,7 @@ from datetime import datetime
 from participante.models import Participante
 from django.contrib.auth.models import User
 
-class TesteSalvarParticipante(TestCase):
+class TesteSalvarParticipante(TestCase):    
     def test_salvar_participante(self):
         codigo          = '12342024'
         nome            = 'nomeTeste'

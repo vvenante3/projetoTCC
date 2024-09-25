@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from .models import Usuario
 
 # LOGIN
 def pagina_login(request):
@@ -27,8 +28,9 @@ def pagina_cadastro(request):
     else:
         # pegando os dados da pág. cadastro
         usuario = request.POST.get('usuario')
-        email = request.POST.get('email')
-        senha = request.POST.get('senha')
+        crp     = request.POST.get('crp'    )
+        email   = request.POST.get('email'  )
+        senha   = request.POST.get('senha'  )
 
         # acessando o Db e filtrando o usuario, retornando o primeiro objeto
         usuario_cadastrado = User.objects.filter(username=usuario).first()
@@ -43,4 +45,7 @@ def pagina_cadastro(request):
             password=senha
         )
         usuario_novo.save()
+
+        Usuario.objects.create(user=usuario_novo, crp=crp)
+
         return HttpResponse('Usuário cadastrado com sucesso.')
