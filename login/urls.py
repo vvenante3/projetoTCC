@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import pagina_login, pagina_cadastro
+from .views import pagina_login, pagina_cadastro, editar_usuario
 
 urlpatterns = [
     # LOGIN
@@ -9,4 +9,6 @@ urlpatterns = [
     # CADASTRO
     path('cadastro/',   pagina_cadastro,    name='pagina_cadastro'),
 
+    # EDITAR CADASTRO
+    path('editar_usuario/', editar_usuario, name='editar_usuario'),
 ]
