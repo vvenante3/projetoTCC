@@ -2,8 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="widh=divice-width, initial-scale=1">
     <title>Participantes</title>
@@ -17,7 +16,7 @@
             align-items: center;
         }
 
-        .insercao_dados{
+        .insercao_dados {
             width: 100%;
             max-width: 900px;
             padding: 20px;
@@ -28,12 +27,50 @@
             margin: 0 auto;
         }
 
+        /* Estilos do Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #ff7171;
+            font-size: 50px;
+            font-weight: bold;
+            border-radius: 5px;
+            position: absolute;
+            right: 35px; /* Distância do lado direito */
+            top: -5px; /* Distância do topo */
+            z-index: 1; /* Garante que o botão fique acima de outros elementos */
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ff0000;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <container>
         <div>
-            <h2> Participantes </h2>
+            <h2>Participantes</h2>
 
             <div>
                 <!--  FORM ACTION BARRA PESQUISA -->
@@ -44,88 +81,112 @@
             <div>
                 <table class="table table-striped">
                     <tr>
-                        <th>ID                  </th>
-                        <th>CÓDIGO              </th>
-                        <th>NOME                </th>
-                        <th>SOBRENOME           </th>
-                        <th>DATA DE NASCIMENTO  </th>
-                        <th>SEXO                </th>
-                        <th>IMAGEM              </th>
+                        <th>ID                </th>
+                        <th>CÓDIGO            </th>
+                        <th>NOME              </th>
+                        <th>SOBRENOME         </th>
+                        <th>DATA DE NASCIMENTO</th>
+                        <th>SEXO              </th>
+                        <th>IMAGEM            </th>
+                        <th>AÇÕES             </th>
                     </tr>
 
                     {% for participante in participantes %}
-
                     <tr>
-                        <th>{{participante.idParticipante               }}</th>
-                        <th>{{participante.codigo                       }}</th>
-                        <th>{{participante.nome                         }}</th>
-                        <th>{{participante.sobrenome                    }}</th>
-                        <th>{{participante.dataNascimento|date:'d/m/Y'  }}</th>
-                        <th>{{participante.sexo                         }}</th>
-                            <th>
-                                {% if participante.imagem %}
-                                    <img src="{{ participante.imagem.url }}" style="height: 35px">
-                                {% else %}
-                                    Sem imagem
-                                {% endif %}
-                            </th>
+                        <th>{{participante.idParticipante}}             </th>
+                        <th>{{participante.codigo}}                     </th>
+                        <th>{{participante.nome}}                       </th>
+                        <th>{{participante.sobrenome}}                  </th>
+                        <th>{{participante.dataNascimento|date:'d/m/Y'}}</th>
+                        <th>{{participante.sexo}}                       </th>
+                        <th>
+                            {% if participante.imagem %}
+                                <img src="{{ participante.imagem.url }}" style="height: 35px">
+                            {% else %}
+                                Sem imagem
+                            {% endif %}
+                        </th>
                         <th>
                             <a href="{% url 'editar_participante' participante.idParticipante %}" class="btn btn-warning">Editar</a>
                             <a href="{% url 'deletar_participante' participante.idParticipante %}" class="btn btn-danger" onclick="return confirm('Deseja realmente deletar este participante?')">Deletar</a>
                             <a href="{% url 'analisar_participante' participante.idParticipante %}" class="btn btn-success">Analisar</a>
                         </th>
-                        {% endfor %}
-                            </tr>
+                    </tr>
+                    {% endfor %}
                 </table>
             </div>
 
             <br>
 
-            <!-- INSERCAO DE DADOS -->
-            <div class="insercao_dados">
-                <h3>Realizar Cadastro</h3>
+            <!-- Botão modal -->
+            <button id="openModal" class="btn btn-primary" style="width: 200px">Adicionar Participante</button>
 
-                <br>
+            <!-- Modal -->
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Realizar Cadastro</h3>
 
-                <form action="{% url 'salvar_participante' %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="codigo">Código</label>
-                            <input type="text" class="form-control" id="codigo" name="codigo" required>
+                    <form action="{% url 'salvar_participante' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="codigo">Código</label>
+                                <input type="text" class="form-control" id="codigo" name="codigo" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sobrenome">Sobrenome</label>
+                                <input type="text" class="form-control" id="sobrenome" name="sobrenome" required>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="nome">Nome</label>
-                            <input type="text" class="form-control" id="nome" name="nome" required>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="dataNascimento">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sexo">Sexo</label>
+                                <input type="text" class="form-control" id="sexo" name="sexo" required>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="sobrenome">Sobrenome</label>
-                            <input type="text" class="form-control" id="sobrenome" name="sobrenome" required>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="imagem">Imagem</label>
+                                <input type="file" class="form-control" id="imagem" name="imagem" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="dataNascimento">Data de Nascimento</label>
-                            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="sexo">Sexo</label>
-                            <input type="text" class="form-control" id="sexo" name="sexo" required>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <label for="imagem">Imagem</label>
-                            <input type="file" class="form-control" id="imagem" name="imagem" required>
-                        </div>
-                    </div>
 
-                    <br>
-
-                    <button type="submit" class="btn btn-primary" style="width: 350px" >Cadastrar</button>
-                </form>
+                        <br>
+                            <div style="text-align: center">
+                                <button type="submit" class="btn btn-primary" style="width: 350px">Cadastrar</button>
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </container>
+
+    <script>
+        var modal   = document.getElementById           ("myModal");
+        var btn     = document.getElementById           ("openModal");
+        var span    = document.getElementsByClassName   ("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
