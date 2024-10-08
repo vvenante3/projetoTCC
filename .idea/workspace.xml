@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d32b2e96-1d15-4127-aae2-9a581a98973f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/login/templates/login/editar_usuario.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/templates/login/cadastro.html" beforeDir="false" afterPath="$PROJECT_DIR$/login/templates/login/cadastro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/login/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/participante/templates/participante/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/participante/templates/participante/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/participante/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/participante/tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,6 +148,9 @@
       <workItem from="1726099295702" duration="609000" />
       <workItem from="1727297619530" duration="3760000" />
       <workItem from="1727731532861" duration="4796000" />
+      <workItem from="1728346809532" duration="248000" />
+      <workItem from="1728347067900" duration="559000" />
+      <workItem from="1728347640223" duration="382000" />
     </task>
     <servers />
   </component>
