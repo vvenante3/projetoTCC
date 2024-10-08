@@ -1,3 +1,4 @@
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils import timezone
@@ -12,16 +13,17 @@ class TesteSalvarParticipante(TestCase):
         sobrenome       = 'sobrenomeTeste'
         dataNascimento  = datetime.strptime('2024-10-01', '%Y-%m-%d').date()
         sexo            = 'M'
-        imagem          = 'imagem.jpg'
+        imagem_path     = 'media/faces_participantes/download.png'
 
-        response = self.client.post(reverse('salvar_participante'), {
-            'codigo'        : codigo,
-            'nome'          : nome,
-            'sobrenome'     : sobrenome,
-            'dataNascimento': dataNascimento,
-            'sexo'          : sexo,
-            'imagem'        : imagem
-        })
+        with open(imagem_path, 'rb') as img:
+            response = self.client.post(reverse('salvar_participante'), {
+                'codigo'        : codigo,
+                'nome'          : nome,
+                'sobrenome'     : sobrenome,
+                'dataNascimento': dataNascimento,
+                'sexo'          : sexo,
+                'imagem'        : img
+            })
 
         self.assertEqual(response.status_code, 302)
         while response.status_code == 302:
@@ -37,7 +39,9 @@ class TesteSalvarParticipante(TestCase):
         self.assertEqual(participante.sobrenome, sobrenome)
         self.assertEqual(participante.dataNascimento, dataNascimento)
         self.assertEqual(participante.sexo, sexo)
-        self.assertEqual(participante.imagem, imagem)
+        self.assertTrue(participante.imagem.name.startswith('faces_participantes/'))
+        self.assertTrue(participante.imagem.name.endswith('.png'))
+
 
 class TesteEditarParticipante(TestCase):
     def setUp(self):
