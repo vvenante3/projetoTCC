@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d32b2e96-1d15-4127-aae2-9a581a98973f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/participante/templates/participante/minha_conta.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/participante/templates/participante/relatorios.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/participante/templates/participante/analisar_participante.html" beforeDir="false" afterPath="$PROJECT_DIR$/participante/templates/participante/analisar_participante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/participante/templates/participante/atualizar_participante.html" beforeDir="false" afterPath="$PROJECT_DIR$/participante/templates/participante/atualizar_participante.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/participante/templates/participante/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/participante/templates/participante/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="d32b2e96-1d15-4127-aae2-9a581a98973f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
