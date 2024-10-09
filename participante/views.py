@@ -34,21 +34,16 @@ def editar_participante(request, id):
     return render(request, 'participante/atualizar_participante.html', {'participante': participante})
 
 def atualizar_participante(request, id):
+    participante = Participante.objects.get(idParticipante=id)
+
     codigo          = request.POST.get('codigo')
     nome            = request.POST.get('nome')
     sobrenome       = request.POST.get('sobrenome')
     dataNascimento  = request.POST.get('dataNascimento')
     sexo            = request.POST.get('sexo')
-    imagem          = request.POST.get('imagem')
 
-    participante = Participante.objects.get(idParticipante=id)
-
-    participante.codigo         = codigo
-    participante.nome           = nome
-    participante.sobrenome      = sobrenome
-    participante.dataNascimento = dataNascimento
-    participante.sexo           = sexo
-    participante.imagem         = imagem
+    if 'imagem' in request.FILES:
+        participante.imagem = request.FILES['imagem']
 
     participante.save()
     return redirect('participante')
