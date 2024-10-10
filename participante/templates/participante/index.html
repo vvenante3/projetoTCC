@@ -164,7 +164,20 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="sexo">Sexo</label>
-                                <input type="text" class="form-control" id="sexo" name="sexo" required>
+                                <div class="d-flex">
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input" type="radio" name="sexo" id="sexoMasculino" value="M" required>
+                                        <label class="form-check-label" for="sexoMasculino">
+                                            Masculino
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sexo" id="sexoFeminino" value="F" required>
+                                        <label class="form-check-label" for="sexoFeminino">
+                                            Feminino
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -175,9 +188,10 @@
                         </div>
 
                         <br>
-                            <div style="text-align: center">
-                                <button type="submit" class="btn btn-primary" style="width: 350px">Cadastrar</button>
-                            </div>
+
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary" style="width: 350px">Cadastrar</button>
+                        </div>
                     </form>
                 </div>
             </div>
