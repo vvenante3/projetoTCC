@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Participante
+from django.db.models import Count
+from datetime import date
 from django.contrib.auth.decorators import login_required
 
 # PARTICIPANTE
@@ -42,6 +44,12 @@ def atualizar_participante(request, id):
     dataNascimento  = request.POST.get('dataNascimento')
     sexo            = request.POST.get('sexo')
 
+    participante.codigo = codigo
+    participante.nome = nome
+    participante.sobrenome = sobrenome
+    participante.dataNascimento = dataNascimento
+    participante.sexo = sexo
+
     if 'imagem' in request.FILES:
         participante.imagem = request.FILES['imagem']
 
@@ -58,4 +66,26 @@ def analisar_participante(request, id):
     return render(request, 'participante/analisar_participante.html', {'participante': participante})
 
 def relatorios(request):
-    return render(request,'participante/relatorios.html')
+    participantes = Participante.objects.all()
+
+    quantidade_participantes = participantes.count()
+
+    hoje = date.today()
+    idades = [
+        hoje.year - p.dataNascimento.year - ((hoje.month, hoje.day) < (p.dataNascimento.month, p.dataNascimento.day))
+        for p in participantes
+    ]
+
+    idade_media = sum(idades) / quantidade_participantes if quantidade_participantes > 0 else 0
+
+    masculino_count = participantes.filter(sexo='M').count()
+    feminino_count = participantes.filter(sexo='F').count()
+
+    context = {
+        'quantidade_participantes': quantidade_participantes,
+        'idade_media': idade_media,
+        'masculino_count': masculino_count,
+        'feminino_count': feminino_count,
+    }
+
+    return render(request, 'participante/relatorios.html', context)
