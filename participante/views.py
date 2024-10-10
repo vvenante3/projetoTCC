@@ -56,3 +56,6 @@ def deletar_participante(request, id):
 def analisar_participante(request, id):
     participante = Participante.objects.get(idParticipante=id)
     return render(request, 'participante/analisar_participante.html', {'participante': participante})
+
+def relatorios(request):
+    return render(request,'participante/relatorios.html')

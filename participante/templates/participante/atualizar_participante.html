@@ -51,8 +51,8 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="">Relatórios</a>
-            <a href="">Minha Conta</a>
+            <a href="{% url 'relatorios'     %}">Relatórios</a>
+            <a href="{% url 'editar_usuario' %}">Minha Conta</a>
         </nav>
     </header>
 
@@ -121,13 +121,20 @@
                     </div>
                     <div class="col-md-6">
                         <label for="sexo">Sexo</label>
-                        <input type="text" class="form-control" id="sexo" name="sexo" value="{{ participante.sexo }}" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <label for="imagem">Imagem</label>
-                        <input type="file" class="form-control" id="imagem" name="imagem">
+                        <div class="d-flex">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="radio" name="sexo" id="sexoMasculino" value="M" {% if participante.sexo == 'Masculino' %} checked {% endif %} required>
+                                <label class="form-check-label" for="sexoMasculino">
+                                    Masculino
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sexo" id="sexoFeminino" value="F" {% if participante.sexo == 'Feminino' %} checked {% endif %} required>
+                                <label class="form-check-label" for="sexoFeminino">
+                                    Feminino
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
