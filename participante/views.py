@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Participante
-from django.db.models import Count
 from datetime import date
 from django.contrib.auth.decorators import login_required
 
