@@ -1,10 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from .models import Usuario
+from participante.models import Participante
 
 # LOGIN
 def pagina_login(request):
@@ -12,7 +13,7 @@ def pagina_login(request):
         return render(request, 'login/login.html')
     else:
         # obtendo os dados inseridos nos campos ' usuario ' e ' senha '.
-        usuario    = request.POST.get('usuario')
+        usuario     = request.POST.get('usuario')
         senha       = request.POST.get('senha')
 
         usuario = authenticate(username=usuario, password=senha)
@@ -20,9 +21,15 @@ def pagina_login(request):
         if usuario:
             login(request, usuario)
 
-            return HttpResponse('Autenticado.') # DESENVOLVER PÁG. PARA INDEX.HTML
+            # Traz os dados que estão cadastrados em nosso Db do app'
+            participantes = Participante.objects.all()
+            return render(request, "participante/index.html", {"participantes": participantes})
         else:
             return HttpResponse('Email ou Senha inválidos.')
+
+def pagina_logout(request):
+    logout(request)
+    return redirect('pagina_login')
 
 def pagina_cadastro(request):
     if request.method == 'GET':
