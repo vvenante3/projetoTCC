@@ -37,10 +37,12 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="{% url 'relatorios'     %}">Relatórios</a>
-            <a href="{% url 'editar_usuario' %}">Minha Conta</a>
+            <a href="{% url 'relatorios'        %}">Relatórios</a>
+            <a href="{% url 'editar_usuario'    %}">Minha Conta</a>
+            <a href="{% url 'deslogar_usuario'  %}" class="btn-logout">Logout</a>
         </nav>
     </header>
+    <div>
         <div class="container">
             <h2>Relatórios de Participantes</h2>
             <p>Quantidade de Participantes: {{ quantidade_participantes }}</p>
@@ -48,5 +50,9 @@
             <p>Participantes Masculinos: {{ masculino_count }}</p>
             <p>Participantes Femininos: {{ feminino_count }}</p>
         </div>
+        <div>
+            <a href="{% url 'participante' %}">Voltar</a>
+        </div>
+    </div>
 </body>
 </html>
