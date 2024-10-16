@@ -77,6 +77,14 @@
     </style>
 </head>
 <body>
+    {% if messages %}
+        <script>
+            {% for messages in messages %}
+                alert("{{ messages }}");
+            {% endfor %}
+        </script>
+    {% endif %}
+
     <header class="header">
         <nav class="nav">
             <a href="{% url 'relatorios'        %}">Relatórios</a>
