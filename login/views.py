@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from .models import Usuario
 from participante.models import Participante
+from django.contrib import messages
 
 # LOGIN
 def pagina_login(request):
@@ -77,13 +78,15 @@ def editar_usuario(request):
         request.user.email = email_novo
         request.user.crp = crp_novo
 
-        request.user.save()
-        request.user.usuario.save()
-
         if senha_nova:
             request.user.set_password(senha_nova)
             request.user.save()
-
             update_session_auth_hash(request, request.user)
+        else:
+            request.user.save()
+            request.user.usuario.save()
 
-        return HttpResponse('Usuário atualizado com sucesso.')
+        messages.success(request, 'Dados atualizados com sucesso!')
+
+        participantes = Participante.objects.all()
+        return render(request, "participante/index.html", {"participantes": participantes})
