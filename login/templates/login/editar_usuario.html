@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -12,11 +13,29 @@
             height: 100%;
             margin: 0;
             display: flex;
+            justify-content: center;
             align-items: center;
             background-color: #e5f7f8;
+            flex-direction: column;
         }
 
-        .container{
+        .wallpaper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: -30%;
+        }
+
+        .logo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            margin-bottom: -150px;
+        }
+
+        .form {
             width: 100%;
             max-width: 600px;
             padding: 20px;
@@ -28,28 +47,31 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1> EDITAR USUARIO </h1>
-        <br>
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" placeholder="Usuário" name="usuario" value="{{ usuario }}" required style="width: 300px">
+    <div class="wallpaper">
+
+        <div class="logo">
+            <img src="{% static 'imagens/emotioncapture/wallpaper-login.png' %}" alt="Logo do Projeto">
+        </div>
+
+        <div class="form">
+            <h1>EDITAR USUÁRIO</h1>
             <br>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" placeholder="Usuário" name="usuario" value="{{ usuario }}" required style="width: 300px">
+                <br><br>
+                <input type="email" placeholder="Email" name="email" value="{{ email }}" required style="width: 300px">
+                <br><br>
+                <input type="text" placeholder="CRP" name="crp" value="{{ crp }}" required style="width: 300px">
+                <br><br>
+                <input type="password" placeholder="Nova Senha (opcional)" name="senha" style="width: 300px">
+                <br><br>
+                <hr class="form-divider">
+                <input class="btn btn-primary" type="submit" value="Atualizar" style="width: 200px">
+            </form>
             <br>
-            <input type="email" placeholder="Email" name="email" value="{{ email }}" required style="width: 300px">
-            <br>
-            <br>
-            <input type="text" placeholder="CRP" name="crp" value="{{ crp }}" required style="width: 300px">
-            <br>
-            <br>
-            <input type="password" placeholder="Nova Senha (opcional)" name="senha" style="width: 300px">
-            <br>
-            <br>
-            <hr class="form-divider">
-            <input class="btn btn-primary" type="submit" value="Atualizar" style="width: 200px">
-        </form>
-        <br>
-        <a href="{% url 'participante' %}">Voltar</a>
+            <a href="{% url 'participante' %}">Voltar</a>
+        </div>
     </div>
 </body>
 </html>
