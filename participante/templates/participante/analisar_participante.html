@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -15,25 +16,55 @@
             top: 0;
             left: 0;
             right: 0;
-            background-color: #f8f9fa;
+            background-color: #53c5d6;
             padding: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
+
         .header .nav {
-            float: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .header .left-nav {
+            display: flex;
+            gap: 15px;
+        }
+
         .header .nav a {
-            margin-left: 15px;
             text-decoration: none;
-            color: #007bff;
+            color: #000000;
+            font-weight: bold;
         }
+
+        .nav-link {
+            transition: background-color 0.3s ease;
+            padding: 10px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #0056b3;
+        }
+
         body, html {
             height: 100%;
             margin: 0;
             display: flex;
             justify-content: center;
+            background-color: #e5f7f8;
             align-items: center;
+        }
+
+        .icon {
+            width: 20px;
+            height: auto;
+            margin-right: 5px;
         }
     </style>
     <script>
@@ -62,13 +93,23 @@
     </script>
 </head>
 <body>
+
     <header class="header">
         <nav class="nav">
-            <a href="{% url 'relatorios'        %}">Relatórios</a>
-            <a href="{% url 'editar_usuario'    %}">Minha Conta</a>
-            <a href="{% url 'deslogar_usuario'  %}" class="btn-logout">Logout</a>
+            <div class="left-nav">
+                <a href="{% url 'editar_usuario' %}" class="nav-link">
+                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> Minha Conta
+                </a>
+                <a href="{% url 'relatorios' %}" class="nav-link">
+                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> Relatórios
+                </a>
+            </div>
+            <a href="{% url 'deslogar_usuario' %}" class="btn-logout nav-link">
+                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> Sair
+            </a>
         </nav>
     </header>
+
     <!--  AMOSTRA DE DADOS -->
     <container>
         <div>
@@ -103,7 +144,7 @@
                 </table>
             </div>
 
-            <button class="btn btn-primary" onclick="mostrarResultado()">Mostrar Resultado</button>
+            <button class="btn btn-primary" onclick="mostrarResultado()">Realizar Análise</button>
             <p id="resultado"></p>
 
             <button id="gerar-pdf" class="btn btn-secondary" style="display:none;" onclick="gerarPDF()">Gerar PDF</button>
