@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="widh=divice-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
@@ -16,45 +17,59 @@
             justify-content: center;
             align-items: center;
             background-color: #e5f7f8;
-            background-size: cover;
-            background-position: center;
+            flex-direction: column;
         }
 
-        .container{
+        .wallpaper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: -30%;
+        }
+
+        .logo {
             width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            margin-bottom: -150px;
+        }
+
+        .form {
+            width: 50%;
             max-width: 600px;
             padding: 20px;
             background-color: #dcdcdc;
             border: 1px solid #ccc;
             border-radius: 8px;
             text-align: center;
-            margin-left: 500px;
         }
     </style>
 </head>
 <body>
-    <container class="container">
-        <div>
-            <h1> LOGIN </h1>
-            <br>
-            <div>
-                <form action="{% url 'pagina_login' %}" method="POST">
-                    {% csrf_token %}
-                    <input type="text" placeholder="Usuário" name="usuario" required>
-                    <br>
-                    <br>
-                    <input type="password" placeholder="Senha" name="senha" required>
-                    <br>
-                    <br>
-                    <hr class="form-divider">
-                    <br>
-                    <input class="btn btn-primary" type="submit" value="Entrar" style="width: 200px">
-                    <br>
-                    <br>
-                    <a class="btn btn-primary" href="{% url 'pagina_cadastro' %}" style="width: 200px">Realizar Cadastro</a>
-                </form>
-            </div>
+    <div class="wallpaper">
+
+        <div class="logo">
+            <img src="{% static 'imagens/emotioncapture/wallpaper-login.png' %}" alt="Logo do Projeto">
         </div>
-    </container>
+
+        <div class="form">
+            <h1>LOGIN</h1>
+            <br>
+            <form action="{% url 'pagina_login' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" placeholder="Usuário" name="usuario" required>
+                <br><br>
+                <input type="password" placeholder="Senha" name="senha" required>
+                <br><br>
+                <hr class="form-divider">
+                <br>
+                <input class="btn btn-primary" type="submit" value="Entrar" style="width: 200px">
+                <br><br>
+                <a class="btn btn-primary" href="{% url 'pagina_cadastro' %}" style="width: 200px">Realizar Cadastro</a>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
