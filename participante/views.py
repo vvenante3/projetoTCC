@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Participante
 from datetime import date
 from django.contrib.auth.decorators import login_required
+import cv2
 
 # PARTICIPANTE
 @login_required(login_url='pagina_login')
@@ -88,3 +89,42 @@ def relatorios(request):
     }
 
     return render(request, 'participante/relatorios.html', context)
+
+
+# Desenvolvimento da analise facial
+def analisar_imagem(imagem_path):
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile.xml')
+
+    img = cv2.imread(imagem_path)
+    if img is None:
+        return "Erro ao carregar a imagem"
+
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+    for (x, y, w, h) in faces:
+        face_gray = gray[y:y+h, x:x+w]
+        face_color = img[y:y + h, x:x + w]
+
+        smiles = smile_cascade.detectMultiScale(face_gray, 1.8, 20)
+
+        if len(smiles) > 0:
+            return "Feliz"
+
+    return "Neutro ou Triste"
+
+def resultado_participante(request, id):
+    participante = Participante.objects.get(idParticipante=id)
+
+    if participante.imagem:
+        imagem_path = participante.imagem.path
+        resultado   = analisar_imagem(imagem_path)
+    else:
+        resultado = "Nenhuma imagem disponível"
+
+    return render(request, 'analisar_participante.html', {
+        'participante': participante,
+        'resultado': resultado
+    })

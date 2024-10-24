@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from .views import participante, salvar_participante, editar_participante, atualizar_participante, deletar_participante, analisar_participante, relatorios
+from .views import participante, salvar_participante, editar_participante, atualizar_participante, deletar_participante, analisar_participante, resultado_participante, relatorios
 
 urlpatterns = [
     # CADASTRO PARTICIPANTES
@@ -11,7 +11,10 @@ urlpatterns = [
     path('editar_participante/<int:id>',    editar_participante,        name='editar_participante'),
     path('atualizar_participante/<int:id>', atualizar_participante,     name='atualizar_participante'),
     path('deletar_participante/<int:id>',   deletar_participante,       name='deletar_participante'),
+
+
     path('analisar_participante/<int:id>',  analisar_participante,      name='analisar_participante'),
+    path('resultado_participante/<int:id>', resultado_participante,     name='resultado_participante'),
 
     path('relatorios/',                     relatorios,                 name='relatorios')
 ]

@@ -67,30 +67,7 @@
             margin-right: 5px;
         }
     </style>
-    <script>
-        function mostrarResultado() {
 
-            document.getElementById('resultado').innerHTML = "Resultado";
-
-            document.getElementById('gerar-pdf').style.display = "inline-block";
-        }
-
-        function gerarPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const resultadoTexto = document.getElementById('resultado').innerText;
-
-            doc.text("Resultado do Participante", 10, 10);
-            doc.text("Nome: {{participante.nome}}", 10, 30);
-            doc.text("Sobrenome: {{participante.sobrenome}}", 10, 40);
-            doc.text("Data de Nascimento: {{participante.dataNascimento|date:'d/m/Y'}}", 10, 50);
-            doc.text("Sexo: {{participante.sexo}}", 10, 60);
-
-            doc.text(`Resultado: ${resultadoTexto}`, 10, 70);
-
-            doc.save("resultado_participante.pdf");
-        }
-    </script>
 </head>
 <body>
 
@@ -143,14 +120,36 @@
                     </tr>
                 </table>
             </div>
+            <div>
+                <button class="btn btn-primary" onclick="mostrarResultado()">Realizar Análise</button>
+                <br><br>
+                <p id="resultado"></p>
 
-            <button class="btn btn-primary" onclick="mostrarResultado()">Realizar Análise</button>
-            <p id="resultado"></p>
-
-            <button id="gerar-pdf" class="btn btn-secondary" style="display:none;" onclick="gerarPDF()">Gerar PDF</button>
-
+                <button id="gerar-pdf" class="btn btn-secondary" style="display:none;" onclick="gerarPDF()">Gerar PDF</button>
+            </div>
         </div>
         <br>
     </container>
+
+    <script>
+        function mostrarResultado() {
+            document.getElementById('resultado').innerHTML = "Resultado";
+            document.getElementById('gerar-pdf').style.display = "inline-block";
+        }
+
+        function gerarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const resultadoTexto = document.getElementById('resultado').innerText;
+            doc.text("Resultado do Participante", 10, 10);
+            doc.text("Nome: {{participante.nome}}", 10, 30);
+            doc.text("Sobrenome: {{participante.sobrenome}}", 10, 40);
+            doc.text("Data de Nascimento: {{participante.dataNascimento|date:'d/m/Y'}}", 10, 50);
+            doc.text("Sexo: {{participante.sexo}}", 10, 60);
+            doc.text(`Resultado: ${resultadoTexto}`, 10, 70);
+            doc.save("resultado_participante.pdf");
+        }
+    </script>
+
 </body>
 </html>
