@@ -120,13 +120,19 @@
                     </tr>
                 </table>
             </div>
-            <div>
-                <button class="btn btn-primary" onclick="mostrarResultado()">Realizar Análise</button>
-                <br><br>
-                <p id="resultado"></p>
 
-                <button id="gerar-pdf" class="btn btn-secondary" style="display:none;" onclick="gerarPDF()">Gerar PDF</button>
+            <div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="imagem_participante" accept="image/*">
+                    <button type="submit">Analisar</button>
+                </form>
+
+                {% if resultado %}
+                    <p>Expressão facial: {{ resultado }}</p>
+                {% endif %}
             </div>
+
         </div>
         <br>
     </container>

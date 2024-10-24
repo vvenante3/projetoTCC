@@ -3,7 +3,11 @@ from django.shortcuts import render, redirect
 from .models import Participante
 from datetime import date
 from django.contrib.auth.decorators import login_required
+
+import os
 import cv2
+from django.conf import settings
+from django.core.files.storage import default_storage
 
 # PARTICIPANTE
 @login_required(login_url='pagina_login')
@@ -92,39 +96,32 @@ def relatorios(request):
 
 
 # Desenvolvimento da analise facial
-def analisar_imagem(imagem_path):
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile.xml')
+def realizar_analise(request):
+    if request.method == 'POST' and request.FILES['imagem_participante']:
+        imagem = request.FILES['imagem_participante']
 
-    img = cv2.imread(imagem_path)
-    if img is None:
-        return "Erro ao carregar a imagem"
+        imagem_path = os.path.join(settings.MEDIA_ROOT, 'temp', imagem.name)
+        default_storage.save(imagem_path, imagem)
 
-    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        img = cv2.imread(imagem_path)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-    for (x, y, w, h) in faces:
-        face_gray = gray[y:y+h, x:x+w]
-        face_color = img[y:y + h, x:x + w]
+        faces = face_cascade.detectMultiScale(gray, 1.1, 4)
 
-        smiles = smile_cascade.detectMultiScale(face_gray, 1.8, 20)
+        resultado = "Neutro"
 
-        if len(smiles) > 0:
-            return "Feliz"
+        for (x, y, w, h) in faces:
+            roi_gray = gray[y:y + h, x:x + w]
 
-    return "Neutro ou Triste"
+            if w > 100:
+                resultado = "Feliz"
+            elif w < 80:
+                resultado = "Triste"
 
-def resultado_participante(request, id):
-    participante = Participante.objects.get(idParticipante=id)
+        default_storage.delete(imagem_path)
 
-    if participante.imagem:
-        imagem_path = participante.imagem.path
-        resultado   = analisar_imagem(imagem_path)
-    else:
-        resultado = "Nenhuma imagem disponível"
+        return render(request, 'analisar_participante.html', {resultado: resultado})
 
-    return render(request, 'analisar_participante.html', {
-        'participante': participante,
-        'resultado': resultado
-    })
+    return render(request, 'analisar_participante.html')
