@@ -5,9 +5,9 @@ from datetime import date
 from django.contrib.auth.decorators import login_required
 
 import os
+import urllib.request
 import cv2
 from django.conf import settings
-from django.core.files.storage import default_storage
 
 # PARTICIPANTE
 @login_required(login_url='pagina_login')
@@ -96,32 +96,36 @@ def relatorios(request):
 
 
 # Desenvolvimento da analise facial
-def realizar_analise(request):
-    if request.method == 'POST' and request.FILES['imagem_participante']:
-        imagem = request.FILES['imagem_participante']
+def realizar_analise(request, participante_id):
+    resultado = None
 
-        imagem_path = os.path.join(settings.MEDIA_ROOT, 'temp', imagem.name)
-        default_storage.save(imagem_path, imagem)
+    if request.method == 'POST' and 'imagem_url' in request.POST:
+        imagem_url = request.POST['imagem_url']
 
-        img = cv2.imread(imagem_path)
+        temp_dir = os.path.join(settings.MEDIA_ROOT, 'temp')
+        if not os.path.exists(temp_dir):
+            os.makedirs(temp_dir)
+
+        image_path = os.path.join(temp_dir, 'imagem_participante.jpg')
+        urllib.request.urlretrieve(imagem_url, image_path)
+
+        img = cv2.imread(image_path)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-
         faces = face_cascade.detectMultiScale(gray, 1.1, 4)
 
-        resultado = "Neutro"
+        if len(faces) > 0:
+            resultado = "Neutro"
+            for (x, y, w, h) in faces:
+                roi_gray = gray[y:y + h, x:x + w]
+                if w > 100:
+                    resultado = "Feliz"
+                elif w < 80:
+                    resultado = "Triste"
+        else:
+            resultado = "Nenhuma face detectada."
 
-        for (x, y, w, h) in faces:
-            roi_gray = gray[y:y + h, x:x + w]
+        os.remove(image_path)
 
-            if w > 100:
-                resultado = "Feliz"
-            elif w < 80:
-                resultado = "Triste"
-
-        default_storage.delete(imagem_path)
-
-        return render(request, 'analisar_participante.html', {resultado: resultado})
-
-    return render(request, 'analisar_participante.html')
+    return render(request, 'analisar_participante.html', {'resultado': resultado, 'participante': participante})
