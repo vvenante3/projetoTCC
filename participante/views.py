@@ -5,9 +5,12 @@ from datetime import date
 from django.contrib.auth.decorators import login_required
 
 import os
-import urllib.request
 import cv2
+import urllib.request
 from django.conf import settings
+from deepface import DeepFace
+import matplotlib.pyplot as plt
+import numpy as np
 
 # PARTICIPANTE
 @login_required(login_url='pagina_login')
@@ -96,7 +99,7 @@ def relatorios(request):
 
 
 # Desenvolvimento da analise facial
-def realizar_analise(request, participante_id):
+def realizar_analise(request,):
     resultado = None
 
     if request.method == 'POST' and 'imagem_url' in request.POST:
@@ -106,26 +109,33 @@ def realizar_analise(request, participante_id):
         if not os.path.exists(temp_dir):
             os.makedirs(temp_dir)
 
-        image_path = os.path.join(temp_dir, 'imagem_participante.jpg')
-        urllib.request.urlretrieve(imagem_url, image_path)
+        imagem_path = os.path.join(temp_dir, 'imagem_participante.jpg')
+        urllib.request.urlretrieve(imagem_url, imagem_path)
 
-        img = cv2.imread(image_path)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img = cv2.imread(imagem_path)
+        img = cv2.resize(img, (640, 480))
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-        face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-        faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+        try:
+            resultado = DeepFace.analyze(img, actions=['emotion'], enforce_detection=False)
+            if resultado:
+                dominant_emotion = resultado[0]['dominant_emotion']
+                emocoes = resultado[0]['emotion']
+                plot_emocoes(emocoes)
+            else:
+                resultado = "Nenhuma face detectada."
+        except Exception as e:
+            resultado = f"Erro na análise: {str(e)}"
 
-        if len(faces) > 0:
-            resultado = "Neutro"
-            for (x, y, w, h) in faces:
-                roi_gray = gray[y:y + h, x:x + w]
-                if w > 100:
-                    resultado = "Feliz"
-                elif w < 80:
-                    resultado = "Triste"
-        else:
-            resultado = "Nenhuma face detectada."
-
-        os.remove(image_path)
+        os.remove(imagem_path)
 
     return render(request, 'analisar_participante.html', {'resultado': resultado, 'participante': participante})
+
+def plot_emocoes(emocoes):
+    x = list(emocoes.values())
+    y = list(emocoes.keys())
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.barh(y, x, color='skyblue')
+    ax.set_xlabel('Intensidade')
+    ax.set_title('Análise de Emoções')
+    plt.show()
