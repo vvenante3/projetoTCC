@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from . import views
-from .views import pagina_login, pagina_logout, pagina_cadastro, editar_usuario
+from .views import pagina_login, pagina_logout, pagina_cadastro, editar_usuario, enviar_codigo_email
 
 urlpatterns = [
     # LOGIN
@@ -15,4 +14,8 @@ urlpatterns = [
 
     # EDITAR CADASTRO
     path('editar_usuario/', editar_usuario,     name='editar_usuario'),
+
+    # ESQUECI MINHA SENHA
+    path('codigo_email/',   enviar_codigo_email, name='codigo_email'),
+
 ]
