@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Redefinir Senha</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Defina uma nova senha</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="new_password1" class="form-label">Nova Senha:</label>
+                <input type="password" id="new_password1" name="new_password1" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="new_password2" class="form-label">Confirme a Nova Senha:</label>
+                <input type="password" id="new_password2" name="new_password2" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Redefinir Senha</button>
+        </form>
+    </div>
+</body>
+</html>

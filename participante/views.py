@@ -43,11 +43,11 @@ def atualizar_participante(request, id):
     dataNascimento  = request.POST.get('dataNascimento')
     sexo            = request.POST.get('sexo')
 
-    participante.codigo = codigo
-    participante.nome = nome
-    participante.sobrenome = sobrenome
+    participante.codigo         = codigo
+    participante.nome           = nome
+    participante.sobrenome      = sobrenome
     participante.dataNascimento = dataNascimento
-    participante.sexo = sexo
+    participante.sexo           = sexo
 
     if 'imagem' in request.FILES:
         participante.imagem = request.FILES['imagem']
