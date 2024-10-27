@@ -39,15 +39,15 @@ def pagina_logout(request):
     return redirect('pagina_login')
 
 def enviar_email_personalizado(destinatario, assunto, mensagem):
-    remetente = "vitor.venante@hotmail.com"
-    senha = "senha123"
-    servidor_smtp = "smtp.office365.com"
-    porta = 587
+    remetente       = "vitor.venante@hotmail.com"
+    senha           = "senha123"
+    servidor_smtp   = "smtp.office365.com"
+    porta           = 587
 
     msg = MIMEMultipart()
-    msg['From'] = remetente
-    msg['To'] = destinatario
-    msg['Subject'] = assunto
+    msg['From']     = remetente
+    msg['To']       = destinatario
+    msg['Subject']  = assunto
     msg.attach(MIMEText(mensagem, 'plain'))
 
     try:
@@ -61,12 +61,12 @@ def enviar_email_personalizado(destinatario, assunto, mensagem):
 
 def enviar_codigo_email(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        user = User.objects.filter(email=email).first()
+        email   = request.POST.get('email')
+        user    = User.objects.filter(email=email).first()
 
         if user:
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = default_token_generator.make_token(user)
+            uid     = urlsafe_base64_encode(force_bytes(user.pk))
+            token   = default_token_generator.make_token(user)
             link_redefinir_senha = request.build_absolute_uri(f"/redefinir-senha/{uid}/{token}/")
 
             mensagem = f"Olá, use o link abaixo para redefinir sua senha:\n{link_redefinir_senha}"
@@ -83,14 +83,14 @@ def enviar_codigo_email(request):
 
 def redefinir_senha(request, uidb64, token):
     try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
+        uid     = force_str(urlsafe_base64_decode(uidb64))
+        user    = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
     if user and default_token_generator.check_token(user, token):
         if request.method == 'POST':
-            nova_senha = request.POST.get('nova_senha')
+            nova_senha      = request.POST.get('nova_senha')
             confirmar_senha = request.POST.get('confirmar_senha')
 
             if nova_senha and nova_senha == confirmar_senha:
@@ -124,9 +124,9 @@ def pagina_cadastro(request):
             return HttpResponse('Já existe um usuário com o mesmo nome.')
 
         usuario_novo = User.objects.create_user(
-            username=usuario,
-            email   =email,
-            password=senha
+            username    =usuario,
+            email       =email,
+            password    =senha
         )
         usuario_novo.save()
 
@@ -148,9 +148,9 @@ def editar_usuario(request):
         crp_novo         = request.POST.get('crp')
         senha_nova       = request.POST.get('senha')
 
-        request.user.username = usuario_novo
-        request.user.email = email_novo
-        request.user.crp = crp_novo
+        request.user.username   = usuario_novo
+        request.user.email      = email_novo
+        request.user.crp        = crp_novo
 
         if senha_nova:
             request.user.set_password(senha_nova)

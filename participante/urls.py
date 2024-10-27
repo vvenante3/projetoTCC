@@ -13,6 +13,7 @@ urlpatterns = [
     path('deletar_participante/<int:id>',   deletar_participante,       name='deletar_participante'),
     path('analisar_participante/<int:id>',  analisar_participante,      name='analisar_participante'),
 
+    # RELATÓRIOS
     path('relatorios/',                     relatorios,                 name='relatorios')
 ]
 
