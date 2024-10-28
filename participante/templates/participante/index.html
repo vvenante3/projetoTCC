@@ -135,11 +135,18 @@
         <div>
             <h2>Participantes</h2>
 
-            <div>
-                <!--  FORM ACTION BARRA PESQUISA -->
+            <div style="position: relative; display: inline-block;">
+                <form method="GET" action="{% url 'participante' %}">
+                    <input type="text" name="q" placeholder="Pesquisar participante..."
+                           value="{{ request.GET.q }}" style="padding-right: 30px; padding-left: 10px;">
+                    <span style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); color: #888;">|</span>
+                    <button type="submit" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+                        <img src="{% static 'imagens/icones/lupa.png' %}" alt="Pesquisar" style="width: 16px; height: 16px;">
+                    </button>
+                </form>
             </div>
 
-            <br>
+        <p>
 
             <div>
                 <table class="table table-striped">
