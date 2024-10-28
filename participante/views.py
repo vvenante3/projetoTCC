@@ -3,15 +3,24 @@ from django.shortcuts import render, redirect
 from .models import Participante
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # PARTICIPANTE
 @login_required(login_url='pagina_login')
 def participante(request):
     # Verifica o login de Autenticação
     if request.user.is_authenticated:
+        query = request.GET.get('q')
 
-        # Traz os dados que estão cadastrados em nosso Db
-        participantes = Participante.objects.all()
+        if query:
+            participantes = Participante.objects.filter(
+                Q(codigo__icontains=query) |
+                Q(nome__icontains=query) |
+                Q(sobrenome__icontains=query)
+            )
+        else:
+            participantes = Participante.objects.all()
+
         return render(request, "participante/index.html", {"participantes": participantes})
     return HttpResponse('Você precisa estar logado.')
 
