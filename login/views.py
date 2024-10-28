@@ -29,7 +29,7 @@ def pagina_login(request):
 
         if usuario:
             login(request, usuario)
-            participantes = Participante.objects.all()
+            participantes = Participante.objects.filter(user=usuario)
             return render(request, "participante/index.html", {"participantes": participantes})
         else:
             return HttpResponse('Email ou Senha inválidos.')

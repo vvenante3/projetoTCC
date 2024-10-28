@@ -14,12 +14,13 @@ def participante(request):
 
         if query:
             participantes = Participante.objects.filter(
+                user=request.user).filter(
                 Q(codigo__icontains=query) |
                 Q(nome__icontains=query) |
                 Q(sobrenome__icontains=query)
             )
         else:
-            participantes = Participante.objects.all()
+            participantes = Participante.objects.filter(user=request.user)
 
         return render(request, "participante/index.html", {"participantes": participantes})
     return HttpResponse('Você precisa estar logado.')
@@ -34,8 +35,7 @@ def salvar_participante(request):
         imagem          = request.FILES['imagem']
 
         # salvar no Db
-        Participante.objects.create(codigo=codigo, nome=nome, sobrenome=sobrenome, dataNascimento=dataNascimento, sexo=sexo, imagem=imagem)
-        participantes = Participante.objects.all()
+        Participante.objects.create(codigo=codigo, nome=nome, sobrenome=sobrenome, dataNascimento=dataNascimento, sexo=sexo, imagem=imagem, user=request.user)
 
     return redirect('participante')
 
