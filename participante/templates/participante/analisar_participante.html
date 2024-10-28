@@ -66,6 +66,14 @@
             height: auto;
             margin-right: 5px;
         }
+
+        .back-link {
+            display: inline-block;
+            color: #0056b3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
     </style>
     <script>
         function mostrarResultado() {
@@ -150,7 +158,11 @@
             <button id="gerar-pdf" class="btn btn-secondary" style="display:none;" onclick="gerarPDF()">Gerar PDF</button>
 
         </div>
+
+        <a href="{% url 'participante' %}" class="back-link">Voltar</a>
+
         <br>
     </container>
+
 </body>
 </html>

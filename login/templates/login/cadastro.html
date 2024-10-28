@@ -45,6 +45,15 @@
             border-radius: 8px;
             text-align: center;
         }
+        
+        .back-link {
+            margin-top: -30px;
+            display: inline-block;
+            color: #0056b3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
     </style>
 </head>
 <body>
@@ -70,7 +79,9 @@
                 <input class="btn btn-primary" type="submit" value="Cadastrar" style="width: 200px">
             </form>
             <br>
-            <a href="{% url 'pagina_login' %}">Voltar para Login</a>
+            
+            <a href="{% url 'pagina_login' %}" class="back-link">Voltar para Login</a>
+            
         </div>
     </div>
 </body>

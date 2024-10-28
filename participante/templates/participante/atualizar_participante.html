@@ -77,6 +77,13 @@
             margin: 0 auto;
         }
 
+        .back-link {
+            display: inline-block;
+            color: #0056b3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
     </style>
 </head>
 <body>
@@ -130,8 +137,6 @@
                 </tr>
             </table>
         </div>
-
-        <br>
 
 <!--     INSERÇÃO DE DADOS-->
         <div class="insercao_dados">
@@ -192,7 +197,7 @@
         <br>
 
         <div>
-            <a href="{% url 'participante' %}">Voltar</a>
+            <a href="{% url 'participante' %}" class="back-link">Voltar</a>
         </div>
     </div>
 </container>

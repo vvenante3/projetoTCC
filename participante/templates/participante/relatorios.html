@@ -51,10 +51,17 @@
         body, html {
             height: 100%;
             margin: 0;
-            display: flex;
-            justify-content: center;
             background-color: #e5f7f8;
-            align-items: center;
+        }
+
+        .content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .title-section {
+            text-align: left;
+            margin-bottom: 20px;
         }
 
         .icon {
@@ -62,37 +69,102 @@
             height: auto;
             margin-right: 5px;
         }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            flex: 1 1 200px;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #d1e7e7;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .card h5 {
+            font-size: 1.25rem;
+            color: #333333;
+        }
+
+        .card p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #53c5d6;
+        }
+
+        .back-link {
+            margin-top: 30px;
+            display: inline-block;
+            color: #0056b3;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <nav class="nav">
-            <div class="left-nav">
-                <a href="{% url 'editar_usuario' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> Minha Conta
-                </a>
-                <a href="{% url 'relatorios' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> Relatórios
-                </a>
-            </div>
-            <a href="{% url 'deslogar_usuario' %}" class="btn-logout nav-link">
-                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> Sair
+<header class="header">
+    <nav class="nav">
+        <div class="left-nav">
+            <a href="{% url 'editar_usuario' %}" class="nav-link">
+                <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> Minha Conta
             </a>
-        </nav>
-    </header>
+            <a href="{% url 'relatorios' %}" class="nav-link">
+                <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> Relatórios
+            </a>
+        </div>
+        <a href="{% url 'deslogar_usuario' %}" class="btn-logout nav-link">
+            <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> Sair
+        </a>
+    </nav>
+</header>
 
-    <div>
-        <div class="container">
+<div class="content">
+    <div class="container">
+        <div class="title-section">
             <h2>Relatórios de Participantes</h2>
-            <p>Quantidade de Participantes: {{ quantidade_participantes }}</p>
-            <p>Idade Média: {{ idade_media|floatformat:1 }} anos</p>
-            <p>Participantes Masculinos: {{ masculino_count }}</p>
-            <p>Participantes Femininos: {{ feminino_count }}</p>
         </div>
-        <div>
-            <a href="{% url 'participante' %}">Voltar</a>
+        <div class="card-container">
+            <div class="card text-center">
+                <img src="{% static 'imagens/icones/img-qtd-participante.png' %}" alt="Quantidade de Participantes" class="mx-auto d-block">
+                <h5>Quantidade de Participantes</h5>
+                <p>{{ quantidade_participantes }}</p>
+            </div>
+            <div class="card text-center">
+                <img src="{% static 'imagens/icones/img-idade-media.png' %}" alt="Idade Média" class="mx-auto d-block">
+                <h5>Idade Média</h5>
+                <p>{{ idade_media|floatformat:1 }} anos</p>
+            </div>
+            <div class="card text-center">
+                <img src="{% static 'imagens/icones/masculino.png' %}" alt="Participantes Masculinos" class="mx-auto d-block">
+                <h5>Participantes Masculinos</h5>
+                <p>{{ masculino_count }}</p>
+            </div>
+            <div class="card text-center">
+                <img src="{% static 'imagens/icones/feminino.png' %}" alt="Participantes Femininos" class="mx-auto d-block">
+                <h5>Participantes Femininos</h5>
+                <p>{{ feminino_count }}</p>
+            </div>
         </div>
+        <a href="{% url 'participante' %}" class="back-link">Voltar</a>
     </div>
+</div>
+
 </body>
 </html>
