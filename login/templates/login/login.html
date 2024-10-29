@@ -57,6 +57,15 @@
         <div class="form">
             <h1>LOGIN</h1>
             <br>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
             <form action="{% url 'pagina_login' %}" method="POST">
                 {% csrf_token %}
                 <input type="text" placeholder="Usuário" name="usuario" required>

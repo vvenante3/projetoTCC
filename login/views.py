@@ -29,10 +29,11 @@ def pagina_login(request):
 
         if usuario:
             login(request, usuario)
-            participantes = Participante.objects.all()
+            participantes = Participante.objects.filter(user=usuario)
             return render(request, "participante/index.html", {"participantes": participantes})
         else:
-            return HttpResponse('Email ou Senha inválidos.')
+            messages.error(request, "Email ou Senha inválidos.")
+            return redirect('pagina_login')
 
 def pagina_logout(request):
     logout(request)
