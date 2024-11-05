@@ -74,31 +74,25 @@
             text-decoration: none;
         }
 
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #overlay img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
     </style>
-    <script>
-        function mostrarResultado() {
-
-            document.getElementById('resultado').innerHTML = "Resultado";
-
-            document.getElementById('gerar-pdf').style.display = "inline-block";
-        }
-
-        function gerarPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const resultadoTexto = document.getElementById('resultado').innerText;
-
-            doc.text("Resultado do Participante", 10, 10);
-            doc.text("Nome: {{participante.nome}}", 10, 30);
-            doc.text("Sobrenome: {{participante.sobrenome}}", 10, 40);
-            doc.text("Data de Nascimento: {{participante.dataNascimento|date:'d/m/Y'}}", 10, 50);
-            doc.text("Sexo: {{participante.sexo}}", 10, 60);
-
-            doc.text(`Resultado: ${resultadoTexto}`, 10, 70);
-
-            doc.save("resultado_participante.pdf");
-        }
-    </script>
 </head>
 <body>
 
@@ -126,7 +120,6 @@
             <div>
                 <table class="table table-striped">
                     <tr>
-                        <th>ID                  </th>
                         <th>CÓDIGO              </th>
                         <th>NOME                </th>
                         <th>SOBRENOME           </th>
@@ -135,7 +128,6 @@
                         <th>IMAGEM              </th>
                     </tr>
                     <tr>
-                        <th>{{participante.idParticipante               }}</th>
                         <th>{{participante.codigo                       }}</th>
                         <th>{{participante.nome                         }}</th>
                         <th>{{participante.sobrenome                    }}</th>
@@ -152,17 +144,97 @@
                 </table>
             </div>
 
-            <button class="btn btn-primary" onclick="mostrarResultado()">Realizar Análise</button>
-            <p id="resultado"></p>
+            <div style="text-align: center; margin-top: 20px;">
+               <button class="btn btn-primary" onclick="mostrarResultado()">Realizar Análise</button>
+            </div>
 
-            <button id="gerar-pdf" class="btn btn-secondary" style="display:none;" onclick="gerarPDF()">Gerar PDF</button>
+            <div id="resultado" style="display: flex; align-items: center; gap: 20px; margin-top: 20px;"></div>
 
+            <div style="text-align: end; margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="reset" class="btn btn-secondary" style="display:none;" onclick="resetarAnalise()">Reset</button>
+                <button id="salvar" class="btn btn-secondary" style="display:none;" onclick="salvarObservacao()">Salvar</button>
+                <button id="gerar-pdf" class="btn btn-secondary" style="display:none;" onclick="gerarPDF()">Gerar PDF</button>
+            </div>
+
+            <br>
+
+            <div>
+                <a href="{% url 'participante' %}" class="back-link">Voltar</a>
+            </div>
         </div>
-
-        <a href="{% url 'participante' %}" class="back-link">Voltar</a>
-
         <br>
     </container>
 
+    <div id="overlay" onclick="fecharImagem()" style="display: none;">
+        <img id="imagem-ampliada" alt="Imagem Ampliada">
+    </div>
+
+    <script>
+        function mostrarResultado() {
+            const resultadoDiv = document.getElementById('resultado');
+
+            resultadoDiv.innerHTML = '';
+
+            const imgResultado = document.createElement('img');
+            imgResultado.src = "{{ participante.imagem.url }}";
+            imgResultado.style.height = '100px';
+            imgResultado.alt = "Imagem do participante";
+            imgResultado.style.cursor = 'pointer';
+            imgResultado.onclick = function () {
+                ampliarImagem(this.src);
+            };
+            resultadoDiv.appendChild(imgResultado);
+
+
+            const TextoObservacao = document.createElement('textarea');
+            TextoObservacao.id = "observacao";
+            TextoObservacao.rows = 4;
+            TextoObservacao.cols = 60;
+            TextoObservacao.placeholder = "Anotar observações.."
+            resultadoDiv.appendChild(TextoObservacao);
+
+            document.getElementById('reset').style.display = "inline-block";
+            document.getElementById('salvar').style.display = "inline-block";
+            document.getElementById('gerar-pdf').style.display = "inline-block";
+        }
+
+        function gerarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const resultadoTexto = document.getElementById('observacao').value;
+
+            doc.text("Resultado do Participante", 10, 10);
+            doc.text("Nome: {{participante.nome}}", 10, 30);
+            doc.text("Sobrenome: {{participante.sobrenome}}", 10, 40);
+            doc.text("Data de Nascimento: {{participante.dataNascimento|date:'d/m/Y'}}", 10, 50);
+            doc.text("Sexo: {{participante.sexo}}", 10, 60);
+            doc.text(`Observação/Diagnóstico: ${resultadoTexto}`, 10, 80);
+            doc.save("resultado_participante.pdf");
+        }
+
+        function salvarObservacao() {
+            const observacao = document.getElementById('observacao').value;
+            alert("Observação salva: " + observacao);
+        }
+
+        function resetarAnalise() {
+            document.getElementById('resultado').innerHTML = '';
+
+            document.getElementById('salvar').style.display = "none";
+            document.getElementById('gerar-pdf').style.display = "none";
+            document.getElementById('reset').style.display = "none";
+        }
+
+        function ampliarImagem(src) {
+            const overlay = document.getElementById('overlay');
+            const imagemAmpliada = document.getElementById('imagem-ampliada');
+            imagemAmpliada.src = src;
+            overlay.style.display = 'flex';
+        }
+
+        function fecharImagem() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
