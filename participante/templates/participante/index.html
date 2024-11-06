@@ -20,6 +20,19 @@
             z-index: 1000;
         }
 
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
         .nav-link {
             transition: background-color 0.3s ease;
             padding: 10px;
@@ -151,7 +164,6 @@
             <div>
                 <table class="table table-striped">
                     <tr>
-                        <th>ID                </th>
                         <th>CÓDIGO            </th>
                         <th>NOME              </th>
                         <th>SOBRENOME         </th>
@@ -163,7 +175,6 @@
 
                     {% for participante in participantes %}
                     <tr>
-                        <th>{{participante.idParticipante}}             </th>
                         <th>{{participante.codigo}}                     </th>
                         <th>{{participante.nome}}                       </th>
                         <th>{{participante.sobrenome}}                  </th>
@@ -171,7 +182,7 @@
                         <th>{{participante.sexo}}                       </th>
                         <th>
                             {% if participante.imagem %}
-                                <img src="{{ participante.imagem.url }}" style="height: 35px">
+                                <img src="{{ participante.imagem.url }}" style="height: 35px; cursor: pointer;" onclick="ampliarImagem('{{ participante.imagem.url }}')">
                             {% else %}
                                 Sem imagem
                             {% endif %}
@@ -258,6 +269,11 @@
             </div>
         </div>
 
+        <div id="overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center;">
+            <span onclick="fecharImagem()" style="position: absolute; top: 10px; right: 10px; color: white; font-size: 30px; cursor: pointer;">&times;</span>
+            <img id="imagem-ampliada" src="" style="max-width: 90%; max-height: 90%; object-fit: contain;">
+        </div>
+
     <script>
         var modal   = document.getElementById           ("myModal");
         var btn     = document.getElementById           ("openModal");
@@ -272,10 +288,25 @@
         }
 
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            const overlay = document.getElementById('overlay');
+            const imagemAmpliada = document.getElementById('imagem-ampliada');
+
+            if (event.target == overlay || event.target == imagemAmpliada) {
+                overlay.style.display = 'none';
             }
+        };
+
+        function ampliarImagem(src) {
+            const overlay = document.getElementById('overlay');
+            const imagemAmpliada = document.getElementById('imagem-ampliada');
+            imagemAmpliada.src = src;
+            overlay.style.display = 'flex';
+    }
+
+        function fecharImagem() {
+            document.getElementById('overlay').style.display = 'none';
         }
+
     </script>
 </body>
 </html>
