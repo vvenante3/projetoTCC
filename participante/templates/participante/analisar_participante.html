@@ -257,18 +257,42 @@
             document.getElementById('gerar-pdf').style.display = "inline-block";
         }
 
+        const codigoParticipante    = "{{ participante.codigo }}";
+        const nomeParticipante      = "{{ participante.nome }}";
+        const sobrenomeParticipante = "{{ participante.sobrenome }}"
+
         function gerarPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            const resultadoTexto = document.getElementById('observacao').value;
 
-            doc.text("Resultado do Participante", 10, 10);
-            doc.text("Nome: {{participante.nome}}", 10, 30);
-            doc.text("Sobrenome: {{participante.sobrenome}}", 10, 40);
-            doc.text("Data de Nascimento: {{participante.dataNascimento|date:'d/m/Y'}}", 10, 50);
-            doc.text("Sexo: {{participante.sexo}}", 10, 60);
-            doc.text(`Observação/Diagnóstico: ${resultadoTexto}`, 10, 80);
-            doc.save("resultado_participante.pdf");
+            const imgPath = "{% static 'imagens/icones/icone.png' %}";
+            doc.addImage(imgPath, 'PNG', 10, 10, 30, 30);
+
+            doc.setFontSize(25);
+            doc.text("Resultado do Participante", 70, 25);
+
+            doc.setFontSize(12);
+            doc.text(`Código: ${codigoParticipante}`, 10, 50);
+            doc.text(`Nome: ${nomeParticipante}`, 10, 60);
+            doc.text(`Sobrenome: ${sobrenomeParticipante}`, 10, 70);
+            doc.text(`Data de Nascimento: {{participante.dataNascimento|date:'d/m/Y'}}`, 10, 80);
+            doc.text(`Sexo: {{participante.sexo}}`, 10, 90);
+
+            const participanteImg = "{{ participante.imagem.url }}";
+            if (participanteImg) {
+                doc.addImage(participanteImg, 'JPEG', 60, 110, 70, 70);
+            }
+
+            const resultadoTexto = document.getElementById('observacao').value;
+            doc.text(`Observação/Diagnóstico: ${resultadoTexto}`, 10, 190);
+
+            const dataHoraAtual = new Date().toLocaleString();
+                doc.setFontSize(10);
+                doc.text(`Gerado em: ${dataHoraAtual}`, 10, doc.internal.pageSize.height - 10);
+
+            const nomeArquivo = `${codigoParticipante}_${nomeParticipante}_${sobrenomeParticipante}.pdf`.replace(/\s+/g, '_');
+
+            doc.save(nomeArquivo);
         }
 
         function salvarObservacao() {
