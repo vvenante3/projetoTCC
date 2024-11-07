@@ -4,6 +4,7 @@ from .models import Participante
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.utils import timezone
 
 # PARTICIPANTE
 @login_required(login_url='pagina_login')
@@ -72,6 +73,10 @@ def deletar_participante(request, id):
 def analisar_participante(request, id):
     participante = Participante.objects.get(idParticipante=id)
     return render(request, 'participante/analisar_participante.html', {'participante': participante})
+
+def historico_participante(request, id):
+    participante = Participante.objects.get(idParticipante=id)
+    return render(request, 'participante/historico_participante.html', {'participante': participante})
 
 def relatorios(request):
     participantes = Participante.objects.all()
