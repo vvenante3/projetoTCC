@@ -217,7 +217,15 @@
 
             <br>
 
-            <div>
+            <div style="text-align: end; margin-top: 20px;">
+                <a href="{% url 'historico_participante' participante.idParticipante %}" class="btn btn-info">
+                    Histórico de Análises
+                </a>
+            </div>
+
+            <br>
+
+            <div style="text-align: start; margin-top: 50px;">
                 <a href="{% url 'participante' %}" class="back-link">Voltar</a>
             </div>
         </div>
@@ -280,11 +288,11 @@
 
             const participanteImg = "{{ participante.imagem.url }}";
             if (participanteImg) {
-                doc.addImage(participanteImg, 'JPEG', 60, 110, 70, 70);
+                doc.addImage(participanteImg, 'JPEG', 60, 95, 70, 70);
             }
 
             const resultadoTexto = document.getElementById('observacao').value;
-            doc.text(`Observação/Diagnóstico: ${resultadoTexto}`, 10, 190);
+            doc.text(`Observação/Diagnóstico: ${resultadoTexto}`, 10, 170);
 
             const dataHoraAtual = new Date().toLocaleString();
                 doc.setFontSize(10);
@@ -293,11 +301,6 @@
             const nomeArquivo = `${codigoParticipante}_${nomeParticipante}_${sobrenomeParticipante}.pdf`.replace(/\s+/g, '_');
 
             doc.save(nomeArquivo);
-        }
-
-        function salvarObservacao() {
-            const observacao = document.getElementById('observacao').value;
-            alert("Observação salva: " + observacao);
         }
 
         function resetarAnalise() {
