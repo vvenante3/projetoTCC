@@ -83,14 +83,14 @@
         <nav class="nav">
             <div class="left-nav">
                 <a href="{% url 'editar_usuario' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> Minha Conta
+                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> MINHA CONTA
                 </a>
                 <a href="{% url 'relatorios' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> Relatórios
+                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> RELATÓRIOS
                 </a>
             </div>
             <a href="{% url 'deslogar_usuario' %}" class="btn-logout nav-link">
-                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> Sair
+                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> SAIR
             </a>
         </nav>
     </header>
@@ -108,7 +108,6 @@
                         <th>SOBRENOME           </th>
                         <th>DATA DE NASCIMENTO  </th>
                         <th>SEXO                </th>
-                        <th>IMAGEM              </th>
                     </tr>
                     <tr>
                         <th>{{participante.codigo                       }}</th>
@@ -116,13 +115,6 @@
                         <th>{{participante.sobrenome                    }}</th>
                         <th>{{participante.dataNascimento|date:'d/m/Y'  }}</th>
                         <th>{{participante.sexo                         }}</th>
-                        <th>
-                            {% if participante.imagem %}
-                                <img src="{{ participante.imagem.url }}" style="height: 50px">
-                            {% else %}
-                                Sem imagem
-                            {% endif %}
-                        </th>
                     </tr>
                 </table>
             </div>

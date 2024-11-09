@@ -139,7 +139,24 @@
             background-color: #C30B15 ;
         }
 
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: auto;
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
     </style>
 </head>
@@ -149,14 +166,14 @@
         <nav class="nav">
             <div class="left-nav">
                 <a href="{% url 'editar_usuario' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> Minha Conta
+                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> MINHA CONTA
                 </a>
                 <a href="{% url 'relatorios' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> Relatórios
+                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> RELATÓRIOS
                 </a>
             </div>
             <a href="{% url 'deslogar_usuario' %}" class="btn-logout nav-link">
-                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> Sair
+                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> SAIR
             </a>
         </nav>
     </header>
@@ -193,10 +210,13 @@
                 </table>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-               <button class="btn btn-success" onclick="mostrarResultado()">Realizar Análise
-                    <img src="{% static 'imagens/icones/btn-play.png'%}" alt="Play" style="height: 15px; vertical-align: middle;">
-               </button>
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
+                <a href="{% url 'historico_participante' participante.idParticipante %}" class="btn btn-primary">
+                    Histórico de Análises
+                </a>
+                <button class="btn btn-success" onclick="mostrarResultado()">Realizar Análise
+                    <img src="{% static 'imagens/icones/btn-play.png' %}" alt="Play" style="height: 15px; vertical-align: middle;">
+                </button>
             </div>
 
             <div id="resultado" style="display: flex; align-items: center; gap: 20px; margin-top: 20px;"></div>
@@ -216,13 +236,6 @@
             </div>
 
             <br>
-
-            <div style="text-align: end; margin-top: 20px;">
-                <a href="{% url 'historico_participante' participante.idParticipante %}" class="btn btn-info">
-                    Histórico de Análises
-                </a>
-            </div>
-
             <br>
 
             <div style="text-align: start; margin-top: 50px;">
@@ -240,29 +253,36 @@
         function mostrarResultado() {
             const resultadoDiv = document.getElementById('resultado');
 
+            const spinner = document.createElement('div');
+            spinner.className = 'spinner';
             resultadoDiv.innerHTML = '';
+            resultadoDiv.appendChild(spinner);
 
-            const imgResultado = document.createElement('img');
-            imgResultado.src = "{{ participante.imagem.url }}";
-            imgResultado.style.height = '100px';
-            imgResultado.alt = "Imagem do participante";
-            imgResultado.style.cursor = 'pointer';
-            imgResultado.onclick = function () {
-                ampliarImagem(this.src);
-            };
-            resultadoDiv.appendChild(imgResultado);
+            setTimeout(() => {
+                resultadoDiv.innerHTML = '';
+
+                const imgResultado = document.createElement('img');
+                imgResultado.src = "{{ participante.imagem.url }}";
+                imgResultado.style.height = '100px';
+                imgResultado.alt = "Imagem do participante";
+                imgResultado.style.cursor = 'pointer';
+                imgResultado.onclick = function () {
+                    ampliarImagem(this.src);
+                };
+                resultadoDiv.appendChild(imgResultado);
+
+                const TextoObservacao = document.createElement('textarea');
+                TextoObservacao.id = "observacao";
+                TextoObservacao.rows = 4;
+                TextoObservacao.cols = 60;
+                TextoObservacao.placeholder = "Anotar observações..";
+                resultadoDiv.appendChild(TextoObservacao);
 
 
-            const TextoObservacao = document.createElement('textarea');
-            TextoObservacao.id = "observacao";
-            TextoObservacao.rows = 4;
-            TextoObservacao.cols = 60;
-            TextoObservacao.placeholder = "Anotar observações.."
-            resultadoDiv.appendChild(TextoObservacao);
-
-            document.getElementById('reset').style.display = "inline-block";
-            document.getElementById('salvar').style.display = "inline-block";
-            document.getElementById('gerar-pdf').style.display = "inline-block";
+                document.getElementById('reset').style.display = "inline-block";
+                document.getElementById('salvar').style.display = "inline-block";
+                document.getElementById('gerar-pdf').style.display = "inline-block";
+            }, 3000);
         }
 
         const codigoParticipante    = "{{ participante.codigo }}";
