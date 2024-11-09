@@ -67,11 +67,15 @@
         body, html {
             height: 100%;
             margin: 0;
-            display: flex;
-            justify-content: center;
+            padding-top: 40px;
             background-color: #e5f7f8;
-            align-items: center;
-            padding-top: 60px;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         .icon {
@@ -133,19 +137,19 @@
         <nav class="nav">
             <div class="left-nav">
                 <a href="{% url 'editar_usuario' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> Minha Conta
+                    <img src="{% static 'imagens/icones/usuario.png' %}" alt="Minha Conta" class="icon"> MINHA CONTA
                 </a>
                 <a href="{% url 'relatorios' %}" class="nav-link">
-                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> Relatórios
+                    <img src="{% static 'imagens/icones/relatorio.png' %}" alt="Relatórios" class="icon"> RELATÓRIOS
                 </a>
             </div>
             <a href="{% url 'deslogar_usuario' %}" class="btn-logout nav-link">
-                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> Sair
+                <img src="{% static 'imagens/icones/power.png' %}" alt="Logout" class="icon"> SAIR
             </a>
         </nav>
     </header>
 
-
+    <div class="main-content">
         <div>
             <h2>Participantes</h2>
 
@@ -171,7 +175,7 @@
                         <th>DATA DE NASCIMENTO</th>
                         <th>SEXO              </th>
                         <th>IMAGEM            </th>
-                        <th>AÇÕES             </th>
+                        <th>                  </th>
                     </tr>
 
                     {% for participante in participantes %}
@@ -274,6 +278,7 @@
             <span onclick="fecharImagem()" style="position: absolute; top: 10px; right: 10px; color: white; font-size: 30px; cursor: pointer;">&times;</span>
             <img id="imagem-ampliada" src="" style="max-width: 90%; max-height: 90%; object-fit: contain;">
         </div>
+    </div>
 
     <script>
         var modal   = document.getElementById           ("myModal");
