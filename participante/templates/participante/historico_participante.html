@@ -22,24 +22,20 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
-
         .header .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
         .header .left-nav {
             display: flex;
             gap: 15px;
         }
-
         .header .nav a {
             text-decoration: none;
             color: #000000;
             font-weight: bold;
         }
-
         .nav-link {
             transition: background-color 0.3s ease;
             padding: 10px;
@@ -47,31 +43,27 @@
             display: inline-flex;
             align-items: center;
         }
-
         .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.3);
             color: #0056b3;
         }
-
         body, html {
             height: 100%;
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            margin-top: 40px;
             background-image: url("{% static 'imagens/emotioncapture/background.png' %}");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
         }
-
         .icon {
             width: 20px;
             height: auto;
             margin-right: 5px;
         }
-
         .back-link {
             display: inline-block;
             color: #0056b3;
@@ -79,6 +71,25 @@
             text-decoration: none;
         }
 
+        .centered-cell {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .btn-pdf {
+            background-color: transparent;
+            border: none;
+            padding: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-pdf:hover{
+            border-radius: 50px;
+            background-color: #C30B15 ;
+        }
+</style>
     </style>
 </head>
 <body>
@@ -102,7 +113,7 @@
     <!--  AMOSTRA DE DADOS -->
     <container>
         <div>
-            <h2> Participante </h2>
+            <h2> Histórico  de Análises </h2>
 
             <div>
                 <table class="table table-striped">
@@ -112,20 +123,131 @@
                         <th>SOBRENOME           </th>
                         <th>DATA DE NASCIMENTO  </th>
                         <th>SEXO                </th>
+                        <th>IMAGEM              </th>
                     </tr>
                     <tr>
-                        <th>{{participante.codigo                       }}</th>
-                        <th>{{participante.nome                         }}</th>
-                        <th>{{participante.sobrenome                    }}</th>
-                        <th>{{participante.dataNascimento|date:'d/m/Y'  }}</th>
-                        <th>{{participante.sexo                         }}</th>
+                        <th>{{ participante.codigo }}</th>
+                        <th>{{ participante.nome }}</th>
+                        <th>{{ participante.sobrenome }}</th>
+                        <th>{{ participante.dataNascimento|date:'d/m/Y' }}</th>
+                        <th>{{ participante.sexo }}</th>
+                        <th>
+                            {% if participante.imagem %}
+                                <img src="{{ participante.imagem.url }}" style="height: 50px">
+                            {% else %}
+                                Sem imagem
+                            {% endif %}
+                        </th>
                     </tr>
                 </table>
             </div>
+            <div class="mt-4">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Data Realizada</th>
+                        <th>Resultado</th>
+                        <th>Observação</th>
+                    </tr>
+                    <tr>
+                        <td>{{ "01/11/2023" }}</td>
+                        <td class="centered-cell">
+                            <img src="{{ participante.imagem.url }}" style="height: 50px">
+                        </td>
+                        <td>Exemplo de Observação 1.</td>
+                    </tr>
+                    <tr>
+                        <td>{{ "15/03/2024" }}</td>
+                        <td class="centered-cell">
+                            <img src="{{ participante.imagem.url }}" style="height: 50px">
+                        </td>
+                        <td>Exemplo de Observação 2.</td>
+                    </tr>
+                    <tr>
+                        <td>{{ "25/07/2024" }}</td>
+                        <td class="centered-cell">
+                            <img src="{{ participante.imagem.url }}" style="height: 50px">
+                        </td>
+                        <td>Exemplo de Observação 3.</td>
+                    </tr>
+                    <tr>
+                        <td>{{ "19/11/2024" }}</td>
+                        <td class="centered-cell">
+                            <img src="{{ participante.imagem.url }}" style="height: 50px">
+                        </td>
+                        <td>EXEMPLO DE OBSERVAÇÃO.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="gerar-pdf-historico" class="btn-pdf" onclick="gerarPDF_historico()">
+                    <img src="{% static 'imagens/icones/btn-pdf.png' %}" alt="Gerar PDF" style="height: 40px; vertical-align: middle;">
+                </button>
+            </div>
+
             <div>
                 <a href="{% url 'analisar_participante' participante.idParticipante %}" class="back-link">Voltar</a>
             </div>
         </div>
     </container>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+    function gerarPDF_historico() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const codigoParticipante = "{{ participante.codigo }}";
+        const nomeParticipante = "{{ participante.nome }}";
+        const sobrenomeParticipante = "{{ participante.sobrenome }}";
+        const dataNascimento = "{{ participante.dataNascimento|date:'d/m/Y' }}";
+        const sexoParticipante = "{{ participante.sexo }}";
+        const participanteImg = "{{ participante.imagem.url }}";
+
+        const imgPath = "{% static 'imagens/icones/icone.png' %}";
+        doc.addImage(imgPath, 'PNG', 10, 10, 30, 30);
+
+        doc.setFontSize(25);
+        doc.text("Histórico do Participante", 70, 25);
+
+        doc.setFontSize(12);
+        doc.text(`Código: ${codigoParticipante}`, 10, 50);
+        doc.text(`Nome: ${nomeParticipante}`, 10, 60);
+        doc.text(`Sobrenome: ${sobrenomeParticipante}`, 10, 70);
+        doc.text(`Data de Nascimento: ${dataNascimento}`, 10, 80);
+        doc.text(`Sexo: ${sexoParticipante}`, 10, 90);
+
+        doc.setFontSize(14);
+        doc.text("DATA", 10, 110);
+        doc.text("IMAGEM", 60, 110);
+        doc.text("OBSERVAÇÃO", 120, 110);
+
+        const historico = [
+            { data: "01/11/2023", observacao: "Exemplo de Observação 1." },
+            { data: "15/03/2024", observacao: "Exemplo de Observação 2." },
+            { data: "25/07/2024", observacao: "Exemplo de Observação 3." },
+            { data: "19/11/2024", observacao: "EXEMPLO DE OBSERVAÇÃO." }
+        ];
+
+        let posY = 125;
+        historico.forEach((item) => {
+            doc.setFontSize(12);
+            doc.text(item.data, 10, posY);
+
+            if (participanteImg) {
+                doc.addImage(participanteImg, 'JPEG', 60, posY - 5, 20, 20);
+            }
+
+            doc.text(item.observacao, 120, posY);
+
+            posY += 20;
+            doc.line(10, posY, 200, posY);
+            posY += 15;
+        });
+
+        const nomeArquivo = `historico_${codigoParticipante}_${nomeParticipante}_${sobrenomeParticipante}.pdf`.replace(/\s+/g, '_');
+
+        doc.save(nomeArquivo);
+    }
+    </script>
 </body>
 </html>
