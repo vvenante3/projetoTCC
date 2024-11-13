@@ -293,6 +293,11 @@
         const nomeParticipante      = "{{ participante.nome }}";
         const sobrenomeParticipante = "{{ participante.sobrenome }}"
 
+        function salvarObservacao(){
+            alert("Análise salva no histórico.")
+        }
+
+
         function gerarPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -312,11 +317,11 @@
 
             const participanteImg = "{{ participante.imagem.url }}";
             if (participanteImg) {
-                doc.addImage(participanteImg, 'JPEG', 60, 95, 70, 70);
+                doc.addImage(participanteImg, 'JPEG', 60, 100, 70, 70);
             }
 
             const resultadoTexto = document.getElementById('observacao').value;
-            doc.text(`Observação/Diagnóstico: ${resultadoTexto}`, 10, 170);
+            doc.text(`Observação: ${resultadoTexto}`, 10, 190);
 
             const dataHoraAtual = new Date().toLocaleString();
                 doc.setFontSize(10);
